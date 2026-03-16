@@ -1,5 +1,5 @@
 ##### Dockerfile ##### 
-ROM python:3.10-slim-buster
+FROM python:3.10-slim-buster
 
 WORKDIR /app
 ENV DJANGO_SETTINGS_MODULE=sample_backend.settings.production
