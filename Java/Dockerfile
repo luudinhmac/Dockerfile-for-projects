@@ -24,7 +24,8 @@ COPY . .
 RUN mvn install -DskipTests=true
 #
 ### Runtime stage: Use a lightweight JRE image to run the compiled application
-FROM eclipse-temurin:17.0.8.1_1-jre-ubi9-minimal ## thay tương ứng các image đề xuất ở trên nếu không chạy
+FROM eclipse-temurin:17.0.8.1_1-jre-ubi9-minimal 
+## thay tương ứng các image đề xuất ở trên nếu không chạy
 
 RUN unlink /etc/localtime;ln -s  /usr/share/zoneinfo/Asia/Ho_Chi_Minh /etc/localtime
 COPY --from=build src/target/filename.jar /run/filename.jar
