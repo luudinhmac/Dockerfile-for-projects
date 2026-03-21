@@ -1,10 +1,14 @@
-##### Dockerfile ##### 
+##### Dockerfile for Python/Django applications #####
+## Build stage: Compile the Python/Django application using Node.js  
 FROM python:3.10-slim-buster
 
 WORKDIR /app
+
+## Set environment variables
 ENV DJANGO_SETTINGS_MODULE=sample_backend.settings.production
 ENV DATABASE_HOST='mysql'
 
+## Install dependencies
 RUN pip install -U pip
 # RUN apt-get update
 # RUN apt-get install -y python3-pip cron nano build-essential python3-dev default-libmysqlclient-dev  default-mysql-client  ffmpeg
@@ -15,15 +19,16 @@ RUN --mount=target=/var/lib/apt/lists,type=cache,sharing=locked \
    && apt-get -y --no-install-recommends install \
    python3-pip cron nano build-essential python3-dev default-libmysqlclient-dev  default-mysql-client  ffmpeg libmagic1
 
-
+## Copy requirements file and install dependencies
 COPY ./requirements.txt /app
 RUN pip3 install -r requirements.txt
 
+## Copy the rest of the application code
 COPY ./ .
 
 COPY docker_entrypoint.sh app.sh
 
-## Run Stage ##
+## Run stage: Use a lightweight Python image to run the compiled application
 EXPOSE 8000
 
 CMD uwsgi --http 0.0.0.0:8000 \
