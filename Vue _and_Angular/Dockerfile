@@ -6,7 +6,7 @@ COPY . .
 RUN npm install 
 RUN npm run build
 
-## run stage ##
+## Runtime stage: Use a lightweight Nginx image to serve the compiled application
 FROM nginx:alpine
 RUN mkdir /run
 COPY --from=build /app/dist /run
