@@ -1,5 +1,5 @@
-##### Dockerfile #####
-## build stage ##
+##### Dockerfile for Vue and Angular applications #####
+## Build stage: Compile the Vue or Angular application using Node.js
 FROM node:18.18-alpine as build
 WORKDIR /app
 COPY . .
